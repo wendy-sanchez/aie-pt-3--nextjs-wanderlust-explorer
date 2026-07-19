@@ -14,7 +14,7 @@ export default function useExperiences(
       try {
         const re = new RegExp(term, "i");
         out = out.filter((e) => re.test(e.title));
-      } catch (e) {
+      } catch {
         // invalid regex, fallback to includes
         out = out.filter((e) => e.title.toLowerCase().includes(term.toLowerCase()));
       }

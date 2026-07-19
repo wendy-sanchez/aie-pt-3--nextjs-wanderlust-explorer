@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function SearchBar() {
@@ -7,12 +7,6 @@ export default function SearchBar() {
   const router = useRouter();
   const pathname = usePathname();
   const initial = searchParams.get("q") ?? "";
-  const [term, setTerm] = useState(initial);
-
-  useEffect(() => {
-    setTerm(initial);
-    // only update when param changes
-  }, [initial]);
 
   function apply(q: string) {
     const params = new URLSearchParams(Array.from(searchParams.entries()));
@@ -22,16 +16,21 @@ export default function SearchBar() {
   }
 
   return (
-    <div className="w-full">
+    <form
+      className="w-full"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        apply((data.get("q")?.toString() ?? "").trim());
+      }}
+    >
       <input
+        key={initial}
+        name="q"
         className="w-full border rounded p-2"
         placeholder="Buscar por título..."
-        value={term}
-        onChange={(e) => setTerm(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") apply(term);
-        }}
+        defaultValue={initial}
       />
-    </div>
+    </form>
   );
 }

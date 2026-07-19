@@ -20,11 +20,11 @@ export default function FilterBar() {
   }
 
   return (
-    <div className="flex gap-2 items-center w-full">
+    <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center w-full">
       <select
         value={selectedCategory}
         onChange={(e) => updateParam("category", e.target.value)}
-        className="border rounded p-2"
+        className="border rounded p-2 w-full sm:w-auto"
       >
         <option value="">Todas las categorías</option>
         {CATEGORIES.map((c) => (
@@ -35,7 +35,7 @@ export default function FilterBar() {
       </select>
 
       <input
-        className="border rounded p-2 flex-1"
+        className="border rounded p-2 w-full sm:flex-1"
         placeholder="Filtrar por destino (ciudad o país)"
         value={destination}
         onChange={(e) => updateParam("destination", e.target.value)}
